@@ -15,11 +15,11 @@ $(document).ready(function () {
 
   searchBtn.click(function (event) {
     event.preventDefault();
-    var q = "weather?q=" + searchInput.val().trim();
+    var q = searchInput.val().trim();
     console.log(q);
 
     $.ajax({
-      url: queryURL + q + apiKey,
+      url: queryURL + "weather?q=" + q + apiKey,
       method: "GET",
     }).then(function (result) {
       // Test to see what I'm retrieving from OWM
@@ -44,9 +44,9 @@ $(document).ready(function () {
       p3Tag.text("Wind Speed: " + result.wind.speed + " MPH");
       main3Div.append(p3Tag);
 
-      mainAjax.push(result)
+      mainAjax.push(result);
     });
-    
+
     // var lat = "lat=" + result.coord.lat;
     // var lon = "lon=" + result.coord.lon;
     // $.ajax({
@@ -56,5 +56,25 @@ $(document).ready(function () {
     //   console.log(result);
     //   // p4Tag.text()
     // });
+
+    $.ajax({
+      url: queryURL + "forecast?q=" + q + apiKey,
+      method: "GET",
+    }).then(function (result) {
+      console.log(result);
+
+      
+      var forecast = (result.list[0].main.temp - 273.15) * 1.8 + 32;
+      $("#t1").text(forecast.toFixed(2))
+      var forecast2 = (result.list[8].main.temp - 273.15) * 1.8 + 32;
+      $("#t2").text(forecast2.toFixed(2))
+      var forecast3 = (result.list[16].main.temp - 273.15) * 1.8 + 32;
+      $("#t3").text(forecast3.toFixed(2))
+      var forecast4 = (result.list[24].main.temp - 273.15) * 1.8 + 32;
+      $("#t4").text(forecast4.toFixed(2))
+      var forecast5 = (result.list[32].main.temp - 273.15) * 1.8 + 32;
+      $("#t5").text(forecast5.toFixed(2))
+      
+    });
   });
 });
