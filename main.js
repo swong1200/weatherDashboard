@@ -7,7 +7,7 @@ $(document).ready(function () {
   var searchBtn = $("#button-addon2");
   var searchInput = $("#searchInput");
 
-  var mainAjax = [];
+  
 
   var queryURL = "https://api.openweathermap.org/data/2.5/";
   // var queryUVI =
@@ -23,7 +23,17 @@ $(document).ready(function () {
       method: "GET",
     }).then(function (result) {
       // Test to see what I'm retrieving from OWM
-      console.log(result);
+      console.log(result.coord);
+      var lat = "&lat=" + result.coord.lat
+      var lon = "&lon=" + result.coord.lon
+      console.log(lat)
+      console.log(lon)
+      $.ajax({
+        url: queryURL + "uvi?" + apiKey + lat + lon,
+        method: "GET",
+      }).then(function(uvi){
+        main4Div.text("UV Index: " + uvi.value)
+      })
       // Variable to store temp
       var temp = (result.main.temp - 273.15) * 1.8 + 32;
       var h2Tag = $("<h2>");
@@ -44,18 +54,9 @@ $(document).ready(function () {
       p3Tag.text("Wind Speed: " + result.wind.speed + " MPH");
       main3Div.append(p3Tag);
 
-      mainAjax.push(result);
+      
     });
 
-    // var lat = "lat=" + result.coord.lat;
-    // var lon = "lon=" + result.coord.lon;
-    // $.ajax({
-    //   url: queryURL + "uvi?" + lat + "&" + lon + apiKey,
-    //   method: "GET",
-    // }).then(function (result) {
-    //   console.log(result);
-    //   // p4Tag.text()
-    // });
 
     $.ajax({
       url: queryURL + "forecast?q=" + q + apiKey,
