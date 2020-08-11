@@ -35,8 +35,7 @@ $(document).ready(function () {
       // Variable to store temp
       var temp = (result.main.temp - 273.15) * 1.8 + 32;
 
-      var h2 = $("<h2>").text(result.name);
-      mainDiv.append(h2);
+      mainDiv.text(result.name);
 
       main1Div.text("Current Temperature: " + temp.toFixed(2) + " \xB0" + "F");
 
@@ -56,17 +55,39 @@ $(document).ready(function () {
       method: "GET",
     }).then(function (result) {
       console.log(result);
+      var iconURL = "http://openweathermap.org/img/wn/"
+      var iconEnding = "@2x.png"
 
       var forecast = (result.list[0].main.temp - 273.15) * 1.8 + 32;
-      $("#t1").text(forecast.toFixed(2));
+      $("#f1").text(result.list[0].dt_txt);
+      $("#t1").text("Temp: " + forecast.toFixed(2) + " \xB0" + "F");
+      $("#humid1").text("Humidity: " + result.list[0].main.humidity + "%")
+      $("#icon1").attr("src", iconURL + result.list[0].weather[0].icon + iconEnding)
+
       var forecast2 = (result.list[8].main.temp - 273.15) * 1.8 + 32;
-      $("#t2").text(forecast2.toFixed(2));
+      $("#f2").text(result.list[8].dt_txt);
+      $("#t2").text("Temp: " + forecast2.toFixed(2) + " \xB0" + "F");
+      $("#humid2").text("Humidity: " + result.list[8].main.humidity + "%")
+      $("#icon2").attr("src", iconURL + result.list[8].weather[0].icon + iconEnding)
+
       var forecast3 = (result.list[16].main.temp - 273.15) * 1.8 + 32;
-      $("#t3").text(forecast3.toFixed(2));
+      $("#f3").text(result.list[16].dt_txt);
+      $("#t3").text("Temp: " + forecast3.toFixed(2) + " \xB0" + "F");
+      $("#humid3").text("Humidity: " + result.list[16].main.humidity + "%")
+      $("#icon3").attr("src", iconURL + result.list[16].weather[0].icon + iconEnding)
+
       var forecast4 = (result.list[24].main.temp - 273.15) * 1.8 + 32;
-      $("#t4").text(forecast4.toFixed(2));
+      $("#f4").text(result.list[24].dt_txt);
+      $("#t4").text("Temp: " + forecast4.toFixed(2) + " \xB0" + "F");
+      $("#humid4").text("Humidity: " + result.list[24].main.humidity + "%")
+      $("#icon4").attr("src", iconURL + result.list[24].weather[0].icon + iconEnding)
+
       var forecast5 = (result.list[32].main.temp - 273.15) * 1.8 + 32;
-      $("#t5").text(forecast5.toFixed(2));
+      $("#f5").text(result.list[32].dt_txt);
+      $("#t5").text("Temp: " + forecast5.toFixed(2) + " \xB0" + "F");
+      $("#humid5").text("Humidity: " + result.list[32].main.humidity + "%")
+      $("#icon5").attr("src", iconURL + result.list[32].weather[0].icon + iconEnding)
+
     });
   });
 });
